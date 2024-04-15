@@ -60,7 +60,6 @@ const MobileCard = ({ onSwipeLeft, onSwipeRight, children }) => {
             </div>
           </div>
         </div>
-        {console.log("soy : ", children[0])}
       </div>
     </article>
   );

@@ -10,10 +10,12 @@ const MagType = () => {
 
     const handleCheck = (e) => {
         const {value,checked} = e.target;
+        //alert(checked)
         if(checked){
             dispatch(setSettings({magType:[...magType,value]}));
         }else{
             dispatch(setSettings({magType:magType.filter((mag) => mag !== value)}));
+            //console.log({magType:magType.filter((mag) => mag !== value)})
         }
     }
 
@@ -26,10 +28,12 @@ return(
           <Form.Check
             inline
             label="md"
-            value="md"
+            value={"md"}
             type={type}
             id={`inline-${type}-1`}
-            onClick={handleCheck}
+            onChange={handleCheck}
+            checked={magType.includes("md") && undefined}
+            defaultChecked={magType.includes("md")}
           />
           <Form.Check
             inline
@@ -37,7 +41,9 @@ return(
             value="ml"
             type={type}
             id={`inline-${type}-2`}
-            onClick={handleCheck}
+            onChange={handleCheck}
+            checked={magType.includes("ml") && undefined}
+            defaultChecked={magType.includes("ml")}
           />
           <Form.Check
             inline
@@ -45,7 +51,9 @@ return(
             value="ms"
             type={type}
             id={`inline-${type}-3`}
-            onClick={handleCheck}
+            onChange={handleCheck}
+            checked={magType.includes("ms") && undefined}
+            defaultChecked={magType.includes("ms")}
           />
            <Form.Check
             inline
@@ -53,7 +61,9 @@ return(
             value="mw"
             type={type}
             id={`inline-${type}-4`}
-            onClick={handleCheck}
+            onChange={handleCheck}
+            checked={magType.includes("mw") && undefined}
+            defaultChecked={magType.includes("mw")}
           />
            <Form.Check
             inline
@@ -61,7 +71,9 @@ return(
             value="me"
             type={type}
             id={`inline-${type}-5`}
-            onClick={handleCheck}
+            onChange={handleCheck}
+            checked={magType.includes("me") && undefined}
+            defaultChecked={magType.includes("me")}
           />
            <Form.Check
             inline
@@ -69,7 +81,9 @@ return(
             value="mi"
             type={type}
             id={`inline-${type}-6`}
-            onClick={handleCheck}
+            onChange={handleCheck}
+            checked={magType.includes("mi") && undefined}
+            defaultChecked={magType.includes("mi")}
           />
            <Form.Check
             inline
@@ -77,7 +91,9 @@ return(
             value="mb"
             type={type}
             id={`inline-${type}-7`}
-            onClick={handleCheck}
+            onChange={handleCheck}
+            checked={magType.includes("mb") && undefined}
+            defaultChecked={magType.includes("mb")}
           />
            <Form.Check
             inline
@@ -85,7 +101,9 @@ return(
             value="mlg"
             type={type}
             id={`inline-${type}-8`}
-            onClick={handleCheck}
+            onChange={handleCheck}
+            checked={magType.includes("mlg") && undefined}
+            defaultChecked={magType.includes("mlg")}
           />
         </div>
       ))}

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     earthquakes: undefined,
+    loadedQuakes: undefined,
     isLoading: true,
     quakesLoaded: false,
     frameCount: 0,
@@ -9,6 +10,11 @@ const initialState = {
         magType: [],
         page: 1,
         per_page: 25
+    },
+    Pagination: {
+        itemsPerPage: 25,
+        currentPage: 1,
+        totalPages: 1
     }
 };
 
@@ -30,18 +36,37 @@ export const userSlice = createSlice({
             },
             setSettings: (state, action) => {
                 const {magType,page,per_page} = action.payload;
-                if(magType !== undefined || magType.length > 0){
+                //alert(magType);
+                if(magType !== undefined && Array.isArray(magType)){
+                    if(magType.length === 0)
+                        state.settings.magType = [];
+                    else
                     state.settings.magType= magType;
                 }
-                if(page !== undefined && page > 0){
-                    state.settings.page = page;
+                if(page !== undefined && page !== null && !isNaN(page)){
+                    state.settings.page = page === "" ? "" : Number(page);
                 }
-                if(per_page !== undefined && per_page > 0){
-                state.settings.per_page = per_page;
+                if(per_page !== undefined && per_page !== null && !isNaN(per_page)){
+                state.settings.per_page = per_page === "" ? "" : Number(per_page);
                 }
             },
+            resetFrameCount: (state) => {
+                state.frameCount = 0;
+            },
+            setCurrentPage: (state, action) => {
+                state.Pagination.currentPage = action.payload;
+            },
+            setLoadedQuakes: (state, action) => {
+                state.loadedQuakes = action.payload;
+            },
+            setTotalPages: (state, action) => {
+                state.Pagination.totalPages = action.payload;
+            },
+            setItemsPerPage: (state, action) => {
+                state.Pagination.itemsPerPage = action.payload;
+            }
 }
 });
 
-export const { setEarthquakes, setFrameCount, setIsLoading, setQuakesLoaded,setSettings } = userSlice.actions;
+export const { setEarthquakes, setFrameCount, setIsLoading, setQuakesLoaded,setSettings,resetFrameCount, setCurrentPage,setLoadedQuakes,setTotalPages, setItemsPerPage } = userSlice.actions;
 export default userSlice.reducer;

@@ -22,8 +22,9 @@ const CardContainer = () => {
         
       >
         {earthquakes.data[currentIndex]}
-        {console.log(earthquakes.data[currentIndex])}
+        {console.log("")}
       </MobileCard>
+      
     </>
   );
 };

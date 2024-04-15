@@ -2,24 +2,20 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect } from "react";
 import { useSelector,useDispatch } from "react-redux";
-import {setEarthquakes,setIsLoading,setQuakesLoaded} from "./redux/userSlice";
+import {setEarthquakes,setQuakesLoaded} from "./redux/userSlice";
 import Card from "./Card/Card";
 import CardContainer from "./CardContainer/CardContainer";
 import LoadingScreen from "./Loading/LoadingScreen";
 import NavBar from "./NavBar/NavBar";
+import baseUrl from "./endpoint";
 
 function App() {
 
-  const {earthquakes,isLoading,frameCount,quakesLoaded} = useSelector((state) => state.user);
+  const {frameCount,quakesLoaded, Pagination:{itemsPerPage}} = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   // esto puede tambien ser una variable de entorno pero se deja asi por simplicidad
-  const endPointUrl ="http://localhost:3000/api/features";
-
-  useEffect(() => {
-    if(earthquakes !== undefined)
-    frameCount >= earthquakes.pagination.per_page ? dispatch(setIsLoading(false)) : dispatch(setIsLoading(true))
-  } , [frameCount,earthquakes]);
+  const endPointUrl = baseUrl();
 
   useEffect(() => {
     fetch(endPointUrl)
@@ -55,19 +51,19 @@ function App() {
         <section>
           {/* Oculta y muestra el texto segun tamaño de pantalla celular, tablet y PC*/}
           <h5 className="d-sm-none text-nowrap bg-body-secondary border fw-bold text-center">
-            Last 25{/*earthquakes.pagination.per_page*/} Earthquake reports
+            Last {itemsPerPage}{/*earthquakes.pagination.per_page*/} Earthquake reports
           </h5>
           <h2 className="d-none d-sm-block d-md-none text-nowrap bg-body-secondary border fw-bold text-center">
-            Last 25 Earthquake reports
+            Last {itemsPerPage} Earthquake reports
           </h2>
           <h1 className="d-none d-md-block text-nowrap bg-body-secondary border fw-bold text-center">
-            Last 25 Earthquake reports 
+            Last {itemsPerPage} Earthquake reports 
           </h1>
           <NavBar/>
           {/* Oculta y muestra las cards con la info del sismo segun tamaño de pantalla celular, tablet y PC*/}
-          {frameCount < 25 ? <LoadingScreen /> : false }
-           {quakesLoaded ? <Card/> : false }
-           {quakesLoaded ? <CardContainer/> : false }     
+          {frameCount < itemsPerPage  && <LoadingScreen /> }
+           {quakesLoaded && <Card/> }
+           {quakesLoaded && <CardContainer/> }     
         </section>
       </main>
       <footer >

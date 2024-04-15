@@ -1,17 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setFrameCount } from "../redux/userSlice";
+import { setFrameCount, setQuakesLoaded } from "../redux/userSlice";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect } from "react";
+import CommentList from "../Comment/CommentList";
+
 
 const Card = () => {
-  const { earthquakes,isLoading } = useSelector((state) => state.user);
+  const { earthquakes,isLoading,frameCount,quakesLoaded,loadedQuakes  } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(earthquakes !== undefined){
+    dispatch(setQuakesLoaded(true));
+  }
+  }, [earthquakes,dispatch]);
 
   return (
     <article className={`d-none d-md-block ${isLoading ? "invisible" : "visible"}`}>
       <div className="row row-cols-1 row-cols-md-3 g-4 mx-4 my-1">
         {/*muestra cada uno de los sismos en una card */}
-        {earthquakes &&
-          earthquakes.data.map((earthquake, key) => {
+        { quakesLoaded && loadedQuakes && loadedQuakes.map((earthquake, key) => {
             const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${earthquake.coordinates.longitude},${earthquake.coordinates.latitude}`;
             return (
               <div key={key} className="col">
@@ -45,10 +53,15 @@ const Card = () => {
                   </div>
                   <div className="card-footer">
                     <small className="text-body-secondary">
+                    <div className="d-flex justify-content-center">
                       <strong>Date & Time:</strong>{" "}
                       <time dateTime={earthquake.attributes.time}>
                         {new Date(earthquake.attributes.time).toLocaleString()}
                       </time>
+                      </div>
+                      <div className="d-flex justify-content-center">
+                      <CommentList earthquakeId={earthquake.id}/>
+                      </div>
                     </small>
                   </div>
                 </div>

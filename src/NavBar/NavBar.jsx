@@ -1,12 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
 import Settings from "./Settings/Settings";
 import Pagination from "./Pagination/Pagination";
 
 
 const NavBar = () => {
-
-    const [open, setOpen] = useState(false);
 
   return (
     <>
