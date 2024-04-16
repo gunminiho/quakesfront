@@ -5,6 +5,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import baseUrl from "../endpoint";
+import Alert from 'react-bootstrap/Alert';
 
 function CommentList({ earthquakeId }) {
   const [show, setShow] = useState(false);
@@ -16,11 +17,15 @@ function CommentList({ earthquakeId }) {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    //http://127.0.0.1:3000/api/features/1/comments
+    
     if (show) {
       axios
         .get(`${baseUrl()}/${earthquakeId}/comments`)
         .then(({ data }) => {
+            if(data.message === "No comments found"){
+                setCommentLoaded(false);
+                return false;
+            } 
           setComments(data.data);
           setCommentLoaded(true);
         })
@@ -62,6 +67,7 @@ function CommentList({ earthquakeId }) {
           <Modal.Title>Tell us about this 'quake!</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ maxHeight: "350px", overflowY: "auto" }}>
+            {!commentLoaded && <Alert variant="primary">No comments found be the first using the box bellow!</Alert>}
           <ol className="list-group list-group-numbered">
             {commentLoaded &&
               comments.map((comment, index) => {
