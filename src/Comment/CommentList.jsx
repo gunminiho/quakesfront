@@ -16,6 +16,7 @@ function CommentList({ earthquakeId }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+
   useEffect(() => {
     
     if (show) {

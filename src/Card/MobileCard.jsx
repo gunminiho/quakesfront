@@ -3,6 +3,7 @@ import { useSwipeable } from "react-swipeable";
 import { useDispatch } from "react-redux";
 import { setFrameCount } from "../redux/userSlice";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CommentList from "../Comment/CommentList";
 
 const MobileCard = ({ onSwipeLeft, onSwipeRight, children }) => {
   const handlers = useSwipeable({
@@ -11,7 +12,7 @@ const MobileCard = ({ onSwipeLeft, onSwipeRight, children }) => {
   });
 
   const dispatch = useDispatch();
-  const earthquake = children[0];
+  const earthquake = children;
   const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${earthquake.coordinates.longitude},${earthquake.coordinates.latitude}`;
 
   return (
@@ -61,6 +62,7 @@ const MobileCard = ({ onSwipeLeft, onSwipeRight, children }) => {
           </div>
         </div>
       </div>
+      <div className="d-flex justify-content-center"><CommentList/></div>
     </article>
   );
 };

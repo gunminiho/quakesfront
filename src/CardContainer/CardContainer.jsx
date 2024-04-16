@@ -19,10 +19,8 @@ const CardContainer = () => {
       <MobileCard
         onSwipeLeft={handleSwipeLeft}
         onSwipeRight={handleSwipeRight}
-        
       >
         {earthquakes.data[currentIndex]}
-        {console.log("")}
       </MobileCard>
       
     </>
