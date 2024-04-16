@@ -1,7 +1,7 @@
 
 
 const baseUrl = ()=>{
-    const url = `http://localhost:3000/api/features`;
+    const url = `https://quakesback.onrender.com/api/features`;
     return url;
 };
 
